@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login#
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     # Query the database for a list of ALL categories currently stored.
@@ -144,3 +145,7 @@ def user_login(request):
             return HttpResponse("invalid login details supplied.")
     else:
         return render(request, 'rango/login.html')
+
+@login_required
+def restricted(request):
+    return HttpResponse("Since you're logged in, you can see this text!")
